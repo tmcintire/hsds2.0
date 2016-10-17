@@ -1,6 +1,6 @@
-# React + Redux Architecture
+# SwingDev Volunteers Application
 
-This repository exists to showcase a scalable React + Redux architecture.
+This repository is for the development of a project to track and assign volunteers and swing dancing events.
 
 
 ## Installation
@@ -12,6 +12,3 @@ This repository exists to showcase a scalable React + Redux architecture.
 
 ## Running the application
 * Enter the command: `npm start`
-
-## Running the tests
-* Enter the command: `npm run test:watch`
