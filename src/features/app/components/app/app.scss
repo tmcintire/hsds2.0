@@ -1,0 +1,20 @@
+$app__content__background-color: #555;
+
+.app {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    background-color: $app__content__background-color;
+    overflow: hidden;
+  }
+}
