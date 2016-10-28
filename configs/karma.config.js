@@ -4,7 +4,8 @@ module.exports = (config) => {
   config.set({
     browsers: ['PhantomJS'],
     files: [
-      { pattern: '../test/tests.js', watched: false },
+      'node_modules/jquery/dist/jquery.min.js',
+      'node_modules/foundation-sites/dist/foundation.min.js',
     ],
     frameworks: ['jasmine'],
     preprocessors: {

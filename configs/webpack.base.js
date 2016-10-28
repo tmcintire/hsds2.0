@@ -10,18 +10,30 @@ const envFile = require('node-env-file');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 try {
-  envFile(path.join(__dirname, '../env/' + process.env.NODE_ENV + '.env'));
+  envFile(path.join(__dirname, `../env/${process.env.NODE_ENV}.env`));
 } catch (e) {
 
 }
 
 module.exports = {
   entry: {
-    app: './src/index.jsx',
-    vendor: './src/vendor.js',
+    app: [
+      './src/index.jsx',
+    ],
+    vendor: [
+      'script!jquery/dist/jquery.min.js',
+      'script!foundation-sites/dist/foundation.min.js',
+      './src/vendor.js',
+    ],
+  },
+  externals: {
+    jquery: 'jQuery',
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
+    alias: {
+      applicationStyles: '../src/styles/index.scss',
+    },
   },
   module: {
     loaders: [
@@ -53,7 +65,16 @@ module.exports = {
       },
     ],
   },
+  sassLoader: {
+    includePaths: [
+      path.resolve(__dirname, './node_modules/foundation-sites/scss'),
+    ],
+  },
   plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+    }),
     new webpack.optimize.OccurenceOrderPlugin(true),
     new webpack.optimize.CommonsChunkPlugin({
       name: ['app', 'vendor'],

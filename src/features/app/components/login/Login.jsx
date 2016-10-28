@@ -1,11 +1,20 @@
 import React from 'react';
-import './login.scss';
-import { signIn, signOut, getUser } from '../../../data/actions';
+import * as actions from '../../../data/actions';
+import firebase from '../../../../firebase/';
 
 export class Login extends React.Component {
   login() {
-    signIn(this.email.value, this.password.value);
-    getUser();
+    const email = this.email.value;
+    const password = this.password.value;
+    firebase.auth().signInWithEmailAndPassword(email, password).catch((err) => {
+      if (err) {
+        this.props.dispatch(actions.loginError());
+      }
+    }).then((success) => {
+      if (success) {
+        window.location = '#/home';
+      }
+    });
   }
   render() {
     return (
@@ -23,4 +32,5 @@ export class Login extends React.Component {
 
 Login.propTypes = {
   error: React.PropTypes.string,
+  dispatch: React.PropTypes.func,
 };

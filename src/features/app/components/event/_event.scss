@@ -1,0 +1,28 @@
+.ticket {
+  button {
+    width: 120px;
+    height: 75px;
+  }
+  .fi-plus, .fi-minus {
+    font-size: 2em;
+  }
+}
+
+/* max-width 640px, mobile-only styles, use when QAing mobile issues */
+@media only screen and (max-width: 40em) {
+  .ticket {
+    .button {
+      width: 50px;
+      height: 50px;
+      font-size: 0.4em;
+    }
+    .fi-plus, .fi-minus {
+      font-size: 5em;
+    }
+    td {
+      margin: 5px;
+      padding: 5px;
+    }
+
+  }
+}

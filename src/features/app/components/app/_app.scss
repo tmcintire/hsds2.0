@@ -1,5 +1,9 @@
 $app__content__background-color: #555;
 
+body {
+  background: rgba(199, 199, 199, 0.1);
+}
+
 .app {
   display: flex;
   flex-direction: column;
@@ -16,5 +20,18 @@ $app__content__background-color: #555;
     flex-shrink: 1;
     background-color: $app__content__background-color;
     overflow: hidden;
+  }
+}
+
+.main-container {
+  width: 85%;
+  margin: 20px auto 0 auto;
+}
+
+@media only screen and (max-width: 40em) {
+  .main-container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
   }
 }

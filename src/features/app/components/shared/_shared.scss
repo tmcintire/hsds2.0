@@ -1,0 +1,23 @@
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  margin-bottom: 15px;
+
+  button {
+    font-size: 1.3em;
+    background: white!important;
+    box-shadow: 1px 1px 1px black;
+    border: none!important;
+  }
+
+  button:hover {
+    background: rgba(199, 199, 199, 0.1)!important;
+  }
+}
+
+.table-styles {
+  border: 2px solid black;
+  box-shadow: 2px 2px 2px black;
+}

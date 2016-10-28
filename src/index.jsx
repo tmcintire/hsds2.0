@@ -4,48 +4,65 @@ import { Route, Router, IndexRoute, hashHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import store from './store';
 import app from './features/app';
-import firebase from './firebase';
-import { getUser } from '../src/features/data/actions';
+import firebase from '../src/firebase/';
+import * as actions from '../src/features/data/actions';
+import * as api from './features/data/api';
 
-getUser();
+
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    store.dispatch(actions.getUser(user));
+    api.fetchUserOrganizations(user.uid);
+  } else if (!user) {
+    store.dispatch(actions.signOut());
+  }
+});
 
 const {
   AppContainer,
   LoginContainer,
-  AccountContainer,
-  VolunteersContainer,
-  AddVolunteer,
-  AddEventContainer,
-  EventListContainer,
   Register,
+  UserHomeContainer,
+  OrganizationContainer,
+  OrganizationBaseContainer,
+  EventContainer,
+  EventBaseContainer,
+  AddEvent,
+  AddOrganization,
+  AddTicket,
 } = app.components;
 
-const requireLogin = (nextState, replace, next) => {
-  if (!firebase.auth().currentUser) {
-    replace('/login');
-  }
-  next();
-};
-
-const redirectIfLoggedIn = (nextState, replace, next) => {
-  if (firebase.auth().currentUser) {
-    replace('/');
-  }
-  next();
-};
+// const requireLogin = (nextState, replace, next) => {
+//   if (!firebase.auth().currentUser) {
+//     replace('/login');
+//   }
+//   next();
+// };
+//
+// const redirectIfLoggedIn = (nextState, replace, next) => {
+//   if (firebase.auth().currentUser) {
+//     replace('/events');
+//   }
+//   next();
+// };
 
 ReactDOM.render(
   <Provider store={store}>
     <Router history={hashHistory}>
       <Route path="/" component={AppContainer}>
-        <IndexRoute component={EventListContainer} onEnter={requireLogin} />
-        <Route path="volunteers" component={VolunteersContainer} onEnter={requireLogin} />
-        <Route path="addvolunteer" component={AddVolunteer} onEnter={requireLogin} />
-        <Route path="account" component={AccountContainer} onEnter={requireLogin} />
-        <Route path="addevent" component={AddEventContainer} onEnter={requireLogin} />
-        <Route path="login" component={LoginContainer} onEnter={redirectIfLoggedIn} />
+        <IndexRoute component={UserHomeContainer} />
+        <Route path="login" component={LoginContainer} />
         <Route path="register" component={Register} />
-        <Route path="event/:id" component={VolunteersContainer} onEnter={requireLogin} />
+        <Route path="home" component={UserHomeContainer} />
+        <Route path="organization" component={OrganizationBaseContainer}>
+          <Route path="addorganization" component={AddOrganization} />
+          <Route path="details/:orgId" component={OrganizationContainer} />
+          <Route path=":orgId/addevent" component={AddEvent} />
+        </Route>
+        <Route path="organization/:orgId/event" component={EventBaseContainer}>
+          <Route path="details/:eventId" component={EventContainer} />
+          <Route path="details/:eventId/addticket" component={AddTicket} />
+        </Route>
       </Route>
     </Router>
   </Provider>,
